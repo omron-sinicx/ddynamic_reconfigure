@@ -159,6 +159,7 @@ void DDynamicReconfigure::updatePublishedInformation()
   has_changed = has_changed || config_msg.ints.size() != last_config_.ints.size();
   has_changed = has_changed || config_msg.doubles.size() != last_config_.doubles.size();
   has_changed = has_changed || config_msg.bools.size() != last_config_.bools.size();
+  has_changed = has_changed || config_msg.strs.size() != last_config_.strs.size();
 
   has_changed = has_changed ||
                 !std::equal(config_msg.ints.begin(), config_msg.ints.end(),
@@ -172,6 +173,10 @@ void DDynamicReconfigure::updatePublishedInformation()
                 !std::equal(config_msg.bools.begin(), config_msg.bools.end(),
                             last_config_.bools.begin(),
                             confCompare<dynamic_reconfigure::BoolParameter>);
+  has_changed = has_changed ||
+		!std::equal(config_msg.strs.begin(), config_msg.strs.end(),
+			    last_config_.strs.begin(),
+			    confCompare<dynamic_reconfigure::StrParameter>);
 
   if (has_changed)
   {
